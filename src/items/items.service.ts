@@ -5,8 +5,12 @@ import { Item } from './item.model';
 export class ItemsService {
   private items: Item[] = [];
 
-  findAll() {
-    return 'this is Items Service';
+  findAll(): Item[] {
+    return this.items;
+  }
+
+  findById(id: string): Item {
+    return this.items.find((item) => item.id === id);
   }
 
   create(item: Item): Item {
