@@ -9,8 +9,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { Item } from './item.model';
 import { CreateItemDto } from './dto/create-item.dto';
+import { Item } from 'src/entities/item.entity';
 
 @Controller('items')
 export class ItemsController {
@@ -27,14 +27,14 @@ export class ItemsController {
   }
 
   @Post()
-  create(
+  async create(
     // @Body('id') id: string,
     // @Body('name') name: string,
     // @Body('price') price: number,
     // @Body('description') description: string,
     @Body() createItemDto: CreateItemDto,
-  ): Item {
-    return this.itemsService.create(createItemDto);
+  ): Promise<Item> {
+    return await this.itemsService.create(createItemDto);
   }
 
   @Patch(':id')
