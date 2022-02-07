@@ -1,3 +1,4 @@
+import { ItemStatus } from './../items/item-status.enum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -13,6 +14,9 @@ export class Item {
 
   @Column()
   description: string;
+
+  @Column()
+  status: ItemStatus;
 
   @Column()
   createdAt: string;
