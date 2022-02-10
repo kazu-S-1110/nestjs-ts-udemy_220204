@@ -1,3 +1,4 @@
+import { JwtStrategy } from './jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
@@ -18,6 +19,7 @@ import { jwtConstants } from './constants';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
+  exports: [JwtStrategy], //別モジュールでも使うのでexport
 })
 export class AuthModule {}
