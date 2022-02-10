@@ -9,7 +9,7 @@ import { CredentialsDto } from './dto/credentials.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userRepository: UserRepository,
+    private userRepository: UserRepository,
     private jwtService: JwtService,
   ) {}
 
