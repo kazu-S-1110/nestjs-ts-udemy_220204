@@ -7,6 +7,7 @@ import { UserRepository } from './user.repository';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserRepository]),
@@ -19,7 +20,7 @@ import { jwtConstants } from './constants';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
-  exports: [JwtStrategy], //別モジュールでも使うのでexport
+  providers: [AuthService, JwtStrategy, JwtAuthGuard],
+  exports: [JwtStrategy, JwtAuthGuard], //別モジュールでも使うのでexport
 })
 export class AuthModule {}
