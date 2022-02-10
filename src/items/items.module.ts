@@ -1,3 +1,4 @@
+import { AuthModule } from './../auth/auth.module';
 import { ItemRepository } from './item.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
@@ -5,7 +6,7 @@ import { ItemsController } from './items.controller';
 import { ItemsService } from './items.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ItemRepository])], //forRootはアプリ全体に反映させるもの、ItemRepositoryはmodule内に閉じ込めるからforFeatureを使う
+  imports: [TypeOrmModule.forFeature([ItemRepository]), AuthModule], //forRootはアプリ全体に反映させるもの、ItemRepositoryはmodule内に閉じ込めるからforFeatureを使う
   controllers: [ItemsController],
   providers: [ItemsService],
 })
