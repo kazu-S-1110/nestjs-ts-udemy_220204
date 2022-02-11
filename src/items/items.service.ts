@@ -1,6 +1,10 @@
 import { ItemRepository } from './item.repository';
 import { CreateItemDto } from './dto/create-item.dto';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ItemStatus } from './item-status.enum';
 import { Item } from 'src/entities/item.entity';
 import { User } from 'src/entities/user.entity';
@@ -25,8 +29,11 @@ export class ItemsService {
     return await this.itemRepository.createItem(createItemDto, user);
   }
 
-  async updateStatus(id: string): Promise<Item> {
+  async updateStatus(id: string, user: User): Promise<Item> {
     const item = await this.findById(id);
+    if (item.userId === user.id) {
+      throw new BadRequestException('You cannot buy your item by yourself');
+    }
     item.status = ItemStatus.SOLD_OUT;
     item.updatedAt = new Date().toISOString();
     await this.itemRepository.save(item);
