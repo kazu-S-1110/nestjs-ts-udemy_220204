@@ -40,7 +40,13 @@ export class ItemsService {
     return item;
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string, user: User): Promise<void> {
+    const item = await this.findById(id);
+    if (item.userId !== user.id) {
+      throw new BadRequestException(
+        "You are not allowed to delete other people's stuff.",
+      );
+    }
     await this.itemRepository.delete(id);
   }
 }
