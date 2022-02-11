@@ -2,6 +2,7 @@ import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import { ItemsService } from './items.service';
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -10,6 +11,7 @@ import {
   Patch,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from 'src/entities/item.entity';
@@ -19,6 +21,7 @@ import { User } from 'src/entities/user.entity';
 @Controller('items')
 // 全体にguardを適用したいならここに書く
 // @UseGuards(JwtAuthGuard)
+@UseInterceptors(ClassSerializerInterceptor)
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
