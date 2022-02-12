@@ -1,3 +1,5 @@
+import { RolesGuard } from './../auth/guards/roles.guard';
+import { UserStatus } from './../auth/user-status.enum';
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import { ItemsService } from './items.service';
 import {
@@ -17,6 +19,7 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from 'src/entities/item.entity';
 import { GetUser } from 'src/auth/decorator/get-user.decorator';
 import { User } from 'src/entities/user.entity';
+import { Role } from 'src/auth/decorator/role.decorator';
 
 @Controller('items')
 // 全体にguardを適用したいならここに書く
@@ -36,7 +39,8 @@ export class ItemsController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @Role(UserStatus.PREMIUM)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async create(
     @Body() createItemDto: CreateItemDto,
     @GetUser() user: User,
