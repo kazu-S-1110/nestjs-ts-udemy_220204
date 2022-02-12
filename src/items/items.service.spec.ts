@@ -7,7 +7,7 @@ const mockItemRepository = () => ({
 });
 
 describe('ItemsServiceTest', () => {
-  let itemsService;
+  let itemsService: ItemsService;
   let itemRepository;
   beforeEach(async () => {
     // インスタンス化する。
