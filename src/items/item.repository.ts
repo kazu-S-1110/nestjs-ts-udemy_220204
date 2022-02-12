@@ -1,8 +1,8 @@
 import { ItemStatus } from './item-status.enum';
 import { CreateItemDto } from './dto/create-item.dto';
-import { Item } from 'src/entities/item.entity';
+import { Item } from '../entities/item.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { User } from 'src/entities/user.entity';
+import { User } from '../entities/user.entity';
 
 @EntityRepository(Item) //このItemはEntityのItem
 export class ItemRepository extends Repository<Item> {

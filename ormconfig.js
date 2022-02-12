@@ -9,7 +9,7 @@ module.exports = {
   entities: ['dist/entities/*.entity.js'], //compileされたファイルを扱うので指定しておく
   migrations: ['dist/migrations/*.js'],
   cli: {
-    entitiesDir: 'src/entities',
-    migrationsDir: 'src/migrations',
+    entitiesDir: '../entities',
+    migrationsDir: '../migrations',
   },
 };

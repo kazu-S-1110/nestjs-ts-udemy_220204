@@ -16,10 +16,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
-import { Item } from 'src/entities/item.entity';
-import { GetUser } from 'src/auth/decorator/get-user.decorator';
-import { User } from 'src/entities/user.entity';
-import { Role } from 'src/auth/decorator/role.decorator';
+import { Item } from '../entities/item.entity';
+import { GetUser } from '../auth/decorator/get-user.decorator';
+import { User } from '../entities/user.entity';
+import { Role } from '../auth/decorator/role.decorator';
 
 @Controller('items')
 // 全体にguardを適用したいならここに書く
