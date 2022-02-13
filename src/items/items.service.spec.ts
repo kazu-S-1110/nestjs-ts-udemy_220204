@@ -8,6 +8,7 @@ import { NotFoundException } from '@nestjs/common';
 const mockItemRepository = () => ({
   find: jest.fn(),
   findOne: jest.fn(),
+  createItem: jest.fn(),
 });
 
 const mockUser1 = {
@@ -24,7 +25,7 @@ const mockUser2 = {
 };
 
 describe('ItemsServiceTest', () => {
-  let itemsService: ItemsService;
+  let itemsService;
   let itemRepository;
   beforeEach(async () => {
     // インスタンス化する。
@@ -74,6 +75,33 @@ describe('ItemsServiceTest', () => {
       await expect(itemsService.findById('test-id')).rejects.toThrow(
         NotFoundException,
       );
+    });
+  });
+
+  describe('create', () => {
+    it('normal', async () => {
+      const expected = {
+        id: 'test-id',
+        name: 'PC',
+        description: '',
+        price: 5000,
+        status: ItemStatus.ON_SALE,
+        createdAt: '',
+        updatedAt: '',
+        userId: mockUser1.id,
+        user: mockUser1,
+      };
+
+      itemRepository.createItem.mockResolvedValue(expected);
+      const result = await itemsService.create(
+        {
+          name: 'PC',
+          price: 5000,
+          description: '',
+        },
+        mockUser1,
+      );
+      expect(result).toEqual(expected);
     });
   });
 });
