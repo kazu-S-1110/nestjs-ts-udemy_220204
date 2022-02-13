@@ -16,16 +16,18 @@ const mockUser1 = {
   username: 'test1',
   password: '1234',
   status: UserStatus.PREMIUM,
+  items: [],
 };
 const mockUser2 = {
   id: '2',
   username: 'test2',
   password: '1234',
   status: UserStatus.FREE,
+  items: [],
 };
 
 describe('ItemsServiceTest', () => {
-  let itemsService;
+  let itemsService: ItemsService;
   let itemRepository;
   beforeEach(async () => {
     // インスタンス化する。
