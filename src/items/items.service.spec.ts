@@ -9,6 +9,7 @@ const mockItemRepository = () => ({
   find: jest.fn(),
   findOne: jest.fn(),
   createItem: jest.fn(),
+  save: jest.fn(),
 });
 
 const mockUser1 = {
@@ -104,6 +105,26 @@ describe('ItemsServiceTest', () => {
         mockUser1,
       );
       expect(result).toEqual(expected);
+    });
+  });
+  describe('updateStatus', () => {
+    // itより外で書くことでdescribe内なら使える
+    const mockItem = {
+      id: 'test-id',
+      name: 'PC',
+      price: 5000,
+      description: '',
+      status: ItemStatus.ON_SALE,
+      createdAt: '',
+      updatedAt: '',
+      userId: mockUser1.id,
+      user: mockUser1,
+    };
+
+    it('normal', async () => {
+      itemRepository.findOne.mockResolvedValue(mockItem);
+      await itemsService.updateStatus('test-id', mockUser2);
+      expect(itemRepository.save).toHaveBeenCalled(); //saveが呼び出されれば成功、呼び出されなければ失敗っていうこと
     });
   });
 });
