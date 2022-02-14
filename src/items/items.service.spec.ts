@@ -3,13 +3,14 @@ import { UserStatus } from './../auth/user-status.enum';
 import { Test } from '@nestjs/testing';
 import { ItemRepository } from './item.repository';
 import { ItemsService } from './items.service';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 const mockItemRepository = () => ({
   find: jest.fn(),
   findOne: jest.fn(),
   createItem: jest.fn(),
   save: jest.fn(),
+  delete: jest.fn(),
 });
 
 const mockUser1 = {
@@ -125,6 +126,40 @@ describe('ItemsServiceTest', () => {
       itemRepository.findOne.mockResolvedValue(mockItem);
       await itemsService.updateStatus('test-id', mockUser2);
       expect(itemRepository.save).toHaveBeenCalled(); //saveが呼び出されれば成功、呼び出されなければ失敗っていうこと
+    });
+
+    it('abnormal: buy own product', async () => {
+      itemRepository.findOne.mockResolvedValue(mockItem);
+      expect(itemsService.updateStatus('test-id', mockUser1)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
+  });
+
+  describe('delete', () => {
+    const mockItem = {
+      id: 'test-id',
+      name: 'PC',
+      price: 5000,
+      description: '',
+      status: ItemStatus.ON_SALE,
+      createdAt: '',
+      updatedAt: '',
+      userId: mockUser1.id,
+      user: mockUser1,
+    };
+
+    it('normal', async () => {
+      itemRepository.findOne.mockResolvedValue(mockItem);
+      await itemsService.delete('test-id', mockUser1);
+      expect(itemRepository.delete).toHaveBeenCalled(); //saveが呼び出されれば成功、呼び出されなければ失敗っていうこと
+    });
+
+    it("abnormal: delete other people's product", async () => {
+      itemRepository.findOne.mockResolvedValue(mockItem);
+      await expect(itemsService.delete('test-id', mockUser2)).rejects.toThrow(
+        BadRequestException,
+      );
     });
   });
 });

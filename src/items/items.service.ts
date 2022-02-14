@@ -47,6 +47,6 @@ export class ItemsService {
         "You are not allowed to delete other people's stuff.",
       );
     }
-    await this.itemRepository.delete(id);
+    await this.itemRepository.delete({ id });
   }
 }
